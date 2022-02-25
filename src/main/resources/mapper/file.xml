@@ -21,4 +21,9 @@
         FROM ljw_data
         ORDER BY upload_date
     </select>
+
+    <select id="updateFileCnt" parameterType="integer ">
+        UPDATE ljw_data
+        SET upload_file_cnt = #{cnt}
+    </select>
 </mapper>

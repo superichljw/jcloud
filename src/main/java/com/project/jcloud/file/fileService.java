@@ -7,4 +7,6 @@ public interface fileService {
     public void insertFileUpload(fileDto dto) throws Exception;
 
     public List<fileDto> selectFileList() throws Exception;
+
+    public void updateFileCnt(int cnt) throws Exception;
 }

@@ -30,6 +30,9 @@
                     <td>${list.fileNewName}</td>
                     <td>${list.fileSize}</td>
                 </tr>
+                <tr>
+                    <td></td>
+                </tr>
             </c:forEach>
         </c:if>
 </table>

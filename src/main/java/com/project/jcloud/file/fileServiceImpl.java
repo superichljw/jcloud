@@ -28,4 +28,9 @@ public class fileServiceImpl implements fileService{
         list = fileMapper.selectFileList();
         return list;
     }
+
+    @Override
+    public void updateFileCnt(int cnt) throws Exception{
+        fileMapper.updateFileCnt(cnt);
+    }
 }

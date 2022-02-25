@@ -13,4 +13,6 @@ public interface fileMapper {
     public void insertFileUpload(fileDto dto);
 
     public List<fileDto> selectFileList();
+
+    public void updateFileCnt(int cnt);
 }
