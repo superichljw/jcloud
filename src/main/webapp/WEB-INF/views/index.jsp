@@ -27,11 +27,12 @@
         <c:if test="${not empty files}">
             <c:forEach var="list" items="${files}">
                 <tr>
-                    <td>${list.fileNewName}</td>
-                    <td>${list.fileSize}</td>
-                </tr>
-                <tr>
-                    <td></td>
+                    <td><img style=" width: 200px;height: 200px " src = "${list.imgPath}"/></td>
+<%--                    <td>${list.imgPath}</td>--%>
+<%--                    <td>${list.fileDir}${list.fileNewName}</td>--%>
+<%--                    <td>${list.fileNewName}</td>--%>
+<%--                    <td>${list.fileDir}</td>--%>
+<%--                    <td>${list.fileSize}</td>--%>
                 </tr>
             </c:forEach>
         </c:if>

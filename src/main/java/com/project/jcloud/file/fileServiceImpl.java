@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service("fileUploadService")
@@ -30,7 +31,14 @@ public class fileServiceImpl implements fileService{
     }
 
     @Override
-    public void updateFileCnt(int cnt) throws Exception{
-        fileMapper.updateFileCnt(cnt);
+    public void updateFileCnt(fileDto dto) throws Exception{
+        fileMapper.updateFileCnt(dto);
+    }
+
+    @Override
+    public int selectFileCnt() throws Exception{
+        int cnt = 0;
+        cnt = fileMapper.selectFileCnt();
+        return cnt;
     }
 }

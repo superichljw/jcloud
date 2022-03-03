@@ -10,6 +10,7 @@
               , #{fileOriName}
               , #{fileNewName}
               , #{fileDir}
+              , #{imgPath}
               , #{fileType}
               , #{fileSize}
               , now()
@@ -22,8 +23,14 @@
         ORDER BY upload_date
     </select>
 
-    <select id="updateFileCnt" parameterType="integer ">
+    <select id="updateFileCnt" parameterType="com.project.jcloud.file.fileDto">
         UPDATE ljw_data
-        SET upload_file_cnt = #{cnt}
+        SET seq = #{fileSeq}
+        WHERE file_new_name = #{fileNewName}
+    </select>
+
+    <select id="selectFileCnt" resultType="integer">
+        SELECT COUNT(*)
+        FROM ljw_data
     </select>
 </mapper>

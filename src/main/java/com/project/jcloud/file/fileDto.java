@@ -13,4 +13,5 @@ public class fileDto {
     private String fileDir;
     private String fileType;
     private String fileSize;
+    private String imgPath;
 }

@@ -14,16 +14,14 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Controller
 public class fileController {
 
-    private static final String file_path = "/Users/jaewoolee/ljw_workspace/jcloud/src/main/resources/static/attaches/";
+    private static final String file_path = "/Users/jaewoolee/ljw_workspace/jcloud/src/main/resources/static/attaches";
+    private static final String img_path = "attaches";
 
     @Autowired
     fileService fileService;
@@ -45,10 +43,11 @@ public class fileController {
 
                 cnt++;
                 dto.setFileSeq(cnt);
-                dto.setFileDir(dir);
+                dto.setFileDir(file_path + dir);
                 dto.setFileOriName(file.getOriginalFilename());
                 dto.setFileType(file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1,file.getOriginalFilename().length()));
                 dto.setFileSize(String.valueOf(file.getSize()));
+
 
                 fileNewName = "(" + cnt +")" + "_" + dto.getFileOriName();
 
@@ -60,18 +59,23 @@ public class fileController {
                 System.out.println("===========================");
 
                 dto.setFileNewName(fileNewName);
+                dto.setImgPath(img_path + dir + dto.getFileNewName());
 
                 fileService.insertFileUpload(dto);
-                File newFileName = new File(file_path + dto.getFileDir(), fileNewName);
+                File newFileName = new File(dto.getFileDir(), fileNewName);
                 file.transferTo(newFileName);
 
-                fileService.updateFileCnt(cnt);
+                fileService.updateFileCnt(dto);
             }
         }
         mv.setViewName("index");
         List<fileDto> list = new ArrayList<>();
         list = fileService.selectFileList();
+        int fCnt = 0;
+        fCnt = fileService.selectFileCnt();
+
         mv.addObject("files",list);
+        mv.addObject("uploadFileCnt",fCnt);
         return mv;
     }
 

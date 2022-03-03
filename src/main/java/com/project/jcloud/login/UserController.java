@@ -1,6 +1,8 @@
 package com.project.jcloud.login;
 
 
+import com.project.jcloud.file.fileDto;
+import com.project.jcloud.file.fileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,13 +13,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Controller
 public class UserController {
 
+    private static final String file_path = "/Users/jaewoolee/ljw_workspace/jcloud/src/main/resources/static/attaches/";
+
     @Autowired
     userService userService;
+
+    @Autowired
+    com.project.jcloud.file.fileService fileService;
 
     @RequestMapping(value="/")
     public String index(){
@@ -43,7 +52,14 @@ public class UserController {
             session.setAttribute("name",loginResult.getUserName());
             session.setAttribute("directory",loginResult.getUserDir());
             session.setAttribute("wifi",loginResult.getConfWifi());
-            session.setAttribute("uploadFileCnt",loginResult.getUploadFileCnt());
+
+            int cnt = 0;
+            cnt = fileService.selectFileCnt();
+            session.setAttribute("uploadFileCnt",cnt);
+
+            List<fileDto> list = new ArrayList<>();
+            list = fileService.selectFileList();
+            mv.addObject("files",list);
         }else{
             mv.setViewName("logout");
             mv.addObject("msg","failure");
