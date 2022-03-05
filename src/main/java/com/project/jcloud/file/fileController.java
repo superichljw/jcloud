@@ -19,8 +19,10 @@ import java.util.*;
 @Slf4j
 @Controller
 public class fileController {
-
-    private static final String file_path = "/Users/jaewoolee/ljw_workspace/jcloud/src/main/resources/static/attaches";
+// 로컬 개발용
+//    private static final String file_path = "/Users/jaewoolee/ljw_workspace/jcloud/src/main/resources/static/attaches";
+    //서버용
+    private static final String file_path = "/home/ljw/apache-tomcat-8.5.76/webapps/jcloud/WEB-INF/classes/static/attaches";
     private static final String img_path = "attaches";
 
     @Autowired
