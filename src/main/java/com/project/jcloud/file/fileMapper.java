@@ -11,11 +11,19 @@ import java.util.Map;
 @Repository
 public interface fileMapper {
 
-    public void insertFileUpload(fileDto dto);
+    public void insertFileUpload_ljw(fileDto dto);
 
-    public List<fileDto> selectFileList();
+    public void insertFileUpload_lsw(fileDto dto);
 
-    public void updateFileCnt(fileDto dto);
+    public List<fileDto> selectFileList_ljw();
 
-    public int selectFileCnt();
+    public List<fileDto> selectFileList_lsw();
+
+    public void updateFileCnt_ljw(fileDto dto);
+
+    public void updateFileCnt_lsw(fileDto dto);
+
+    public int selectFileCnt_ljw();
+
+    public int selectFileCnt_lsw();
 }

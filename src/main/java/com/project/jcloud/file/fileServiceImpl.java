@@ -17,28 +17,54 @@ public class fileServiceImpl implements fileService{
     fileMapper fileMapper;
 
     @Override
-    public void insertFileUpload(fileDto dto) throws Exception{
+    public void insertFileUpload_ljw(fileDto dto) throws Exception{
         log.debug("insertFileUpload START");
-        fileMapper.insertFileUpload(dto);
+        fileMapper.insertFileUpload_ljw(dto);
         log.debug("insertFileUpload END");
     }
 
     @Override
-    public List<fileDto> selectFileList() throws Exception{
+    public void insertFileUpload_lsw(fileDto dto) throws Exception{
+        log.debug("insertFileUpload START");
+        fileMapper.insertFileUpload_lsw(dto);
+        log.debug("insertFileUpload END");
+    }
+
+    @Override
+    public List<fileDto> selectFileList_ljw() throws Exception{
         List<fileDto> list = new ArrayList<>();
-        list = fileMapper.selectFileList();
+        list = fileMapper.selectFileList_ljw();
         return list;
     }
 
     @Override
-    public void updateFileCnt(fileDto dto) throws Exception{
-        fileMapper.updateFileCnt(dto);
+    public List<fileDto> selectFileList_lsw() throws Exception{
+        List<fileDto> list = new ArrayList<>();
+        list = fileMapper.selectFileList_lsw();
+        return list;
     }
 
     @Override
-    public int selectFileCnt() throws Exception{
+    public void updateFileCnt_ljw(fileDto dto) throws Exception{
+        fileMapper.updateFileCnt_ljw(dto);
+    }
+
+    @Override
+    public void updateFileCnt_lsw(fileDto dto) throws Exception{
+        fileMapper.updateFileCnt_lsw(dto);
+    }
+
+    @Override
+    public int selectFileCnt_ljw() throws Exception{
         int cnt = 0;
-        cnt = fileMapper.selectFileCnt();
+        cnt = fileMapper.selectFileCnt_ljw();
+        return cnt;
+    }
+
+    @Override
+    public int selectFileCnt_lsw() throws Exception{
+        int cnt = 0;
+        cnt = fileMapper.selectFileCnt_lsw();
         return cnt;
     }
 }

@@ -20,7 +20,7 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    private static final String file_path = "/Users/jaewoolee/ljw_workspace/jcloud/src/main/resources/static/attaches/";
+//    private static final String file_path = "/Users/jaewoolee/ljw_workspace/jcloud/src/main/resources/static/attaches/";
 
     @Autowired
     userService userService;
@@ -52,13 +52,24 @@ public class UserController {
             session.setAttribute("name",loginResult.getUserName());
             session.setAttribute("directory",loginResult.getUserDir());
             session.setAttribute("wifi",loginResult.getConfWifi());
+            session.setAttribute("user",loginResult.getUserId());
+
+            String user = loginResult.getUserId();
 
             int cnt = 0;
-            cnt = fileService.selectFileCnt();
-            session.setAttribute("uploadFileCnt",cnt);
-
             List<fileDto> list = new ArrayList<>();
-            list = fileService.selectFileList();
+
+            if(user.equals("ljw")){
+                cnt = fileService.selectFileCnt_ljw();
+                list = fileService.selectFileList_ljw();
+            }else if(user.equals("lsw")){
+                cnt = fileService.selectFileCnt_lsw();
+                list = fileService.selectFileList_lsw();
+            }
+
+
+
+            session.setAttribute("uploadFileCnt",cnt);
             mv.addObject("files",list);
         }else{
             mv.setViewName("logout");

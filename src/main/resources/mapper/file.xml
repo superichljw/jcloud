@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.project.jcloud.file.fileMapper">
-    <select id="insertFileUpload"  parameterType="com.project.jcloud.file.fileDto">
+    <select id="insertFileUpload_ljw"  parameterType="com.project.jcloud.file.fileDto">
         INSERT INTO ljw_data
         VALUES(
               #{fileSeq}
@@ -17,20 +17,51 @@
                )
     </select>
 
-    <select id="selectFileList" resultType="com.project.jcloud.file.fileDto">
+    <select id="insertFileUpload_lsw"  parameterType="com.project.jcloud.file.fileDto">
+        INSERT INTO lsw_data
+        VALUES(
+                  #{fileSeq}
+              , #{fileOriName}
+              , #{fileNewName}
+              , #{fileDir}
+              , #{imgPath}
+              , #{fileType}
+              , #{fileSize}
+              , now()
+              )
+    </select>
+
+    <select id="selectFileList_ljw" resultType="com.project.jcloud.file.fileDto">
         SELECT *
         FROM ljw_data
         ORDER BY upload_date
     </select>
 
-    <select id="updateFileCnt" parameterType="com.project.jcloud.file.fileDto">
+    <select id="selectFileList_lsw" resultType="com.project.jcloud.file.fileDto">
+        SELECT *
+        FROM lsw_data
+        ORDER BY upload_date
+    </select>
+
+    <select id="updateFileCnt_ljw" parameterType="com.project.jcloud.file.fileDto">
         UPDATE ljw_data
         SET seq = #{fileSeq}
         WHERE file_new_name = #{fileNewName}
     </select>
 
-    <select id="selectFileCnt" resultType="integer">
+    <select id="updateFileCnt_lsw" parameterType="com.project.jcloud.file.fileDto">
+        UPDATE lsw_data
+        SET seq = #{fileSeq}
+        WHERE file_new_name = #{fileNewName}
+    </select>
+
+    <select id="selectFileCnt_ljw" resultType="integer">
         SELECT COUNT(*)
         FROM ljw_data
+    </select>
+
+    <select id="selectFileCnt_lsw" resultType="integer">
+        SELECT COUNT(*)
+        FROM lsw_data
     </select>
 </mapper>
