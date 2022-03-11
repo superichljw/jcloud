@@ -110,7 +110,7 @@ public class fileController {
         return mv;
     }
 
-    @RequestMapping(value="/common/getImg.do" , method=RequestMethod.GET)
+    @RequestMapping(value="/jcloud/common/getImg.do" , method=RequestMethod.GET)
     public void getImg(
             @RequestParam(value="imgPath") String imgPath,
             HttpServletResponse response) throws Exception{
