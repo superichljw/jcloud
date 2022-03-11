@@ -1,6 +1,7 @@
 package com.project.jcloud.file;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -13,8 +14,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
+import java.io.*;
 import java.util.*;
 
 @Slf4j
@@ -106,6 +108,92 @@ public class fileController {
         mv.addObject("files",list);
         mv.addObject("uploadFileCnt",fCnt);
         return mv;
+    }
+
+    @RequestMapping(value="/common/getImg.do" , method=RequestMethod.GET)
+    public void getImg(
+            @RequestParam(value="imgPath") String imgPath,
+            HttpServletResponse response) throws Exception{
+
+        String DIR = file_path + "/ljw/";
+        String filePath = imgPath;
+
+        getImage(filePath,response);
+    }
+
+    public void getImage(String imgPath, HttpServletResponse response) throws Exception{
+
+        File file = new File(imgPath);
+        if(!file.isFile()){
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.write("<script type='text/javascript'>alert('조회된 정보가 없습니다.'); self.close();</script>");
+            out.flush();
+            return;
+        }
+
+        FileInputStream fis = null;
+        new FileInputStream(file);
+
+        BufferedInputStream in = null;
+        ByteArrayOutputStream bStream = null;
+        try {
+            fis = new FileInputStream(file);
+            in = new BufferedInputStream(fis);
+            bStream = new ByteArrayOutputStream();
+            int imgByte;
+            while ((imgByte = in.read()) != -1) {
+                bStream.write(imgByte);
+            }
+
+            String type = "";
+            String ext = FilenameUtils.getExtension(file.getName());
+
+            System.out.println("EXT ::: " + ext);
+            if (ext != null && !"".equals(ext)) {
+                if ("jpg".equals(ext.toLowerCase())) {
+                    type = "image/jpeg";
+                } else {
+                    type = "image/" + ext.toLowerCase();
+                }
+                System.out.println("TYPE ::: " + type);
+            } else {
+                log.debug("Image fileType is null.");
+            }
+
+            response.setHeader("Content-Type", type);
+            response.setContentLength(bStream.size());
+
+            bStream.writeTo(response.getOutputStream());
+
+            response.getOutputStream().flush();
+            response.getOutputStream().close();
+
+        } catch (Exception e) {
+            log.debug("{}", e);
+        } finally {
+            if (bStream != null) {
+                try {
+                    bStream.close();
+                } catch (Exception est) {
+                    log.debug("IGNORED: {}", est.getMessage());
+                }
+            }
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (Exception ei) {
+                    log.debug("IGNORED: {}", ei.getMessage());
+                }
+            }
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (Exception efis) {
+                    log.debug("IGNORED: {}", efis.getMessage());
+                }
+            }
+        }
     }
 
 }

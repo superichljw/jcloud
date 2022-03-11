@@ -72,7 +72,7 @@ public class UserController {
             session.setAttribute("uploadFileCnt",cnt);
             mv.addObject("files",list);
         }else{
-            mv.setViewName("logout");
+            mv.setViewName("index");
             mv.addObject("msg","failure");
         }
         return mv;
