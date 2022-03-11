@@ -80,6 +80,8 @@ public class fileController {
                 File newFileName = new File(dto.getFileDir(), fileNewName);
                 file.transferTo(newFileName);
 
+
+
                 if(user.equals("ljw")){
                     fileService.updateFileCnt_ljw(dto);
                 }else if(user.equals("lsw")){
