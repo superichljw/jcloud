@@ -69,7 +69,7 @@ public class fileController {
                 System.out.println("===========================");
 
                 dto.setFileNewName(fileNewName);
-                dto.setImgPath(dto.getFileDir()+ dto.getFileNewName());
+                dto.setImgPath(file_path + dir + dto.getFileNewName());
 
                 if(user.equals("ljw")){
                     fileService.insertFileUpload_ljw(dto);
