@@ -115,9 +115,8 @@ public class fileController {
             @RequestParam(value="imgPath") String imgPath,
             HttpServletResponse response) throws Exception{
 
-        String DIR = file_path + "/ljw/";
         String filePath = imgPath;
-
+        log.debug("IMAGE PATH ::: " + imgPath);
         getImage(filePath,response);
     }
 
@@ -150,6 +149,7 @@ public class fileController {
             String ext = FilenameUtils.getExtension(file.getName());
 
             System.out.println("EXT ::: " + ext);
+            log.debug("EXT ::: " + ext);
             if (ext != null && !"".equals(ext)) {
                 if ("jpg".equals(ext.toLowerCase())) {
                     type = "image/jpeg";
@@ -157,6 +157,7 @@ public class fileController {
                     type = "image/" + ext.toLowerCase();
                 }
                 System.out.println("TYPE ::: " + type);
+                log.debug("TYPE ::: " + type);
             } else {
                 log.debug("Image fileType is null.");
             }

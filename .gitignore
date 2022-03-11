@@ -1,6 +1,6 @@
 HELP.md
 .gradle
-**/src/main/resources/application.properties
+/main/resources/application.properties
 build/classes/**
 build/generated/**
 build/resources/**
