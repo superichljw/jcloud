@@ -27,7 +27,7 @@
         <c:if test="${not empty files}">
             <c:forEach var="list" items="${files}">
                 <tr>
-                    <td><img style=" width: 200px;height: 200px " src = "/jcloud/common/getImg.do?imgPath=${list.imgPath}/></td>
+                    <td><img style=" width: 200px;height: 200px " src = "/jcloud/getImg.do?imgPath=${list.imgPath}"/></td>
 <%--                    <td>${list.imgPath}</td>--%>
 <%--                    <td>${list.fileDir}${list.fileNewName}</td>--%>
 <%--                    <td>${list.fileNewName}</td>--%>
