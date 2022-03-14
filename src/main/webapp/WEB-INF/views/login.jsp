@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/resources/css/style.css">
     <title>시작페이지</title>
 </head>
 <body>
@@ -11,7 +11,7 @@
     <div class="loginPg">
         <form id="login" name="login" action="login.do" method="post">
                 <div>
-                    <img src="/static/image/jcloud.png">
+                    <img src="/resources/image/jcloud.png">
                 </div>
                 <div class="login-id-input">
                     <input placeholder="ID" type="text" id="userId" name="userId">
