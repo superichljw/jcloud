@@ -26,14 +26,38 @@ public class UserController {
     userService userService;
 
     @Autowired
-    com.project.jcloud.file.fileService fileService;
+    fileService fileService;
 
     @RequestMapping(value="/")
     public String index(){
         return "login";
     }
 
-    @RequestMapping(value="loginCheck.do" , method = RequestMethod.POST)
+    @RequestMapping(value="index.do")
+    public ModelAndView main_page(HttpServletRequest request) throws Exception{
+        HttpSession session = request.getSession();
+        ModelAndView mv = new ModelAndView();
+
+        int cnt = Integer.parseInt(session.getAttribute("uploadFileCnt").toString());
+        String user = session.getAttribute("user").toString();
+
+        List<fileDto> list = new ArrayList<>();
+
+        if(user.equals("ljw")){
+            cnt = fileService.selectFileCnt_ljw();
+            list = fileService.selectFileList_ljw();
+        }else if(user.equals("lsw")){
+            cnt = fileService.selectFileCnt_lsw();
+            list = fileService.selectFileList_lsw();
+        }
+        mv.addObject("files",list);
+        mv.addObject("uploadFileCnt",cnt);
+
+        mv.setViewName("index");
+        return mv;
+    }
+
+    @RequestMapping(value="login.do" , method = RequestMethod.POST)
     public ModelAndView loginCheck(@ModelAttribute userDto vo, HttpServletRequest request) throws Exception {
         userDto loginResult = userService.loginCheck(vo);
 //        System.out.println(userService.loginCheck(vo).getUserId());
@@ -42,11 +66,7 @@ public class UserController {
         ModelAndView mv = new ModelAndView();
 
         if(loginResult.getUserId()!= "" || loginResult != null){
-            mv.setViewName("index");
-//            mv.addObject("msg","success!");
-//            mv.addObject("name",loginResult.getUserName());
-//            mv.addObject("directory",loginResult.getUserDir());
-//            mv.addObject("wifi",loginResult.getConfWifi());
+
             HttpSession session = request.getSession();
             session.setAttribute("msg","success!");
             session.setAttribute("name",loginResult.getUserName());
@@ -54,25 +74,9 @@ public class UserController {
             session.setAttribute("wifi",loginResult.getConfWifi());
             session.setAttribute("user",loginResult.getUserId());
 
-            String user = loginResult.getUserId();
-
-            int cnt = 0;
-            List<fileDto> list = new ArrayList<>();
-
-            if(user.equals("ljw")){
-                cnt = fileService.selectFileCnt_ljw();
-                list = fileService.selectFileList_ljw();
-            }else if(user.equals("lsw")){
-                cnt = fileService.selectFileCnt_lsw();
-                list = fileService.selectFileList_lsw();
-            }
-
-
-
-            session.setAttribute("uploadFileCnt",cnt);
-            mv.addObject("files",list);
+            mv.setViewName("redirect:index.do");
         }else{
-            mv.setViewName("index");
+            mv.setViewName("redirect:index.do");
             mv.addObject("msg","failure");
         }
         return mv;

@@ -1,10 +1,12 @@
 package com.project.jcloud.file;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.net.URLEncoder;
 import java.util.*;
 
 @Slf4j
@@ -35,6 +38,20 @@ public class fileController {
 
     @Value("${file.path}")
     private String file_path;
+
+    @RequestMapping(value = "fileDownload.do")
+    public void download(HttpServletResponse response, @RequestParam Map<String, Object> paramMap) throws Exception{
+        String path = "";
+        byte[] fileByte = FileUtils.readFileToByteArray(new File(path));
+
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode("tistory.png", "UTF-8")+"\";");
+        response.setHeader("Content-Transfer-Encoding", "binary");
+
+        response.getOutputStream().write(fileByte);
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
+    }
 
     @RequestMapping(value="fileUpload.do" , method = RequestMethod.POST)
     public ModelAndView upload(@RequestParam MultipartFile[] uploadfile, HttpServletRequest request)throws Exception{
@@ -92,21 +109,8 @@ public class fileController {
 
             }
         }
-        mv.setViewName("index");
-        List<fileDto> list = new ArrayList<>();
-        int fCnt = 0;
 
-        if(user.equals("ljw")){
-            list = fileService.selectFileList_ljw();
-            fCnt = fileService.selectFileCnt_ljw();
-        }else if(user.equals("lsw")){
-            list = fileService.selectFileList_lsw();
-            fCnt = fileService.selectFileCnt_lsw();
-        }
-
-
-        mv.addObject("files",list);
-        mv.addObject("uploadFileCnt",fCnt);
+        mv.setViewName("redirect:index.do");
         return mv;
     }
 
