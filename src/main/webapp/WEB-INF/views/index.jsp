@@ -4,12 +4,20 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/jcloud/css/style.css">
+<%--    서버용--%>
+<%--    <link rel="stylesheet" href="/jcloud/css/style.css">--%>
+<%--    로컬용--%>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
     <title>시작페이지</title>
     <script>
-        function tmp(){
-            var image = document.querySelector('img')
-            alert(image.src);
+        function file_download(filename){
+            var path = document.querySelector('img').src
+            var selected = document.createElement('a');
+            selected.setAttribute('href',path);
+            selected.setAttribute('download',filename);
+            document.body.appendChild(selected);
+            selected.click();
+            selected.parentNode.removeChild(selected);
         }
     </script>
 </head>
@@ -33,7 +41,8 @@
     <c:if test="${not empty files}">
         <c:forEach var="list" items="${files}">
             <div class="grid-img">
-                <div class="image-detail"><img src ="getImg.do?imgPath=${list.imgPath}" onclick="tmp()"/></div>
+                <div class="img-detail"><img src ="getImg.do?imgPath=${list.imgPath}" onclick="file_download('${list.fileNewName}')"/></div>
+<%--                <a href="getImg.do?imgPath=${list.imgPath}" download="${list.fileNewName}"><img src ="getImg.do?imgPath=${list.imgPath}" /></a>--%>
             </div>
         </c:forEach>
     </c:if>

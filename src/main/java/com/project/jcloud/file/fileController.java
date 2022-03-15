@@ -39,19 +39,19 @@ public class fileController {
     @Value("${file.path}")
     private String file_path;
 
-    @RequestMapping(value = "fileDownload.do")
-    public void download(HttpServletResponse response, @RequestParam Map<String, Object> paramMap) throws Exception{
-        String path = "";
-        byte[] fileByte = FileUtils.readFileToByteArray(new File(path));
-
-        response.setContentType("application/octet-stream");
-        response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode("tistory.png", "UTF-8")+"\";");
-        response.setHeader("Content-Transfer-Encoding", "binary");
-
-        response.getOutputStream().write(fileByte);
-        response.getOutputStream().flush();
-        response.getOutputStream().close();
-    }
+//    @RequestMapping(value = "fileDownload.do")
+//    public void download(HttpServletResponse response, @RequestParam Map<String, Object> paramMap) throws Exception{
+//        String path = "";
+//        byte[] fileByte = FileUtils.readFileToByteArray(new File(path));
+//
+//        response.setContentType("application/octet-stream");
+//        response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode("tistory.png", "UTF-8")+"\";");
+//        response.setHeader("Content-Transfer-Encoding", "binary");
+//
+//        response.getOutputStream().write(fileByte);
+//        response.getOutputStream().flush();
+//        response.getOutputStream().close();
+//    }
 
     @RequestMapping(value="fileUpload.do" , method = RequestMethod.POST)
     public ModelAndView upload(@RequestParam MultipartFile[] uploadfile, HttpServletRequest request)throws Exception{

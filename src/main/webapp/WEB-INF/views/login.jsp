@@ -3,7 +3,10 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/jcloud/css/style.css">
+    <%--    서버용--%>
+    <%--    <link rel="stylesheet" href="/jcloud/css/style.css">--%>
+    <%--    로컬용--%>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
     <title>시작페이지</title>
 </head>
 <body>
@@ -11,7 +14,10 @@
     <div class="loginPg">
         <form id="login" name="login" action="login.do" method="post">
                 <div>
-                    <img src="/jcloud/image/jcloud.png">
+<%--                    서버용--%>
+<%--                    <img src="/jcloud/image/jcloud.png">--%>
+<%--                    로컬용--%>
+                    <img src="<%=request.getContextPath()%>/image/jcloud.png">
                 </div>
                 <div class="login-id-input">
                     <input placeholder="ID" type="text" id="userId" name="userId">

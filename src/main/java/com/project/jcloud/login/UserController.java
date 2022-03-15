@@ -1,10 +1,12 @@
 package com.project.jcloud.login;
 
-
+import com.project.jcloud.util.AES256;
 import com.project.jcloud.file.fileDto;
 import com.project.jcloud.file.fileService;
+import com.project.jcloud.util.AES256;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,14 @@ import java.util.List;
 public class UserController {
 
 //    private static final String file_path = "/Users/jaewoolee/ljw_workspace/jcloud/src/main/resources/static/attaches/";
+@Value("${aes.algorithm}")
+private String algo;
+
+    @Value("${aes.key}")
+    private String key;
+
+    @Value("${aes.iv}")
+    private String iv;
 
     @Autowired
     userService userService;
@@ -59,10 +69,13 @@ public class UserController {
 
     @RequestMapping(value="login.do" , method = RequestMethod.POST)
     public ModelAndView loginCheck(@ModelAttribute userDto vo, HttpServletRequest request) throws Exception {
+        /*암호화 적용 패스워드*/
+        AES256 aes = new AES256();
+        String pw = aes.encrypt(algo,key,iv,vo.getUserPw());
+        vo.setUserPw(pw);
+
         userDto loginResult = userService.loginCheck(vo);
-//        System.out.println(userService.loginCheck(vo).getUserId());
-        log.debug(vo.getUserId());
-        log.debug(vo.getUserPw());
+
         ModelAndView mv = new ModelAndView();
 
         if(loginResult.getUserId()!= "" || loginResult != null){
