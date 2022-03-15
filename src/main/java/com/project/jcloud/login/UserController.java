@@ -38,8 +38,7 @@ public class UserController {
         HttpSession session = request.getSession();
         ModelAndView mv = new ModelAndView();
 
-//        int cnt = Integer.parseInt(session.getAttribute("uploadFileCnt").toString());
-        int cnt = 0;
+        int cnt = Integer.parseInt(session.getAttribute("uploadFileCnt").toString());
         String user = session.getAttribute("user").toString();
 
         List<fileDto> list = new ArrayList<>();
@@ -74,7 +73,7 @@ public class UserController {
             session.setAttribute("directory",loginResult.getUserDir());
             session.setAttribute("wifi",loginResult.getConfWifi());
             session.setAttribute("user",loginResult.getUserId());
-//            session.setAttribute("uploadFileCnt",loginResult.getUploadFileCnt());
+            session.setAttribute("uploadFileCnt",loginResult.getUploadFileCnt());
 
             mv.setViewName("redirect:index.do");
         }else{
