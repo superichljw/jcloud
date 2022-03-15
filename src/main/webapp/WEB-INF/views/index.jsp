@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/jcloud/css/style.css">
     <title>시작페이지</title>
     <script>
         function tmp(){
