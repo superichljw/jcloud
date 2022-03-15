@@ -8,7 +8,9 @@
     <script src="<%=request.getContextPath()%>/js/common.js"></script>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
     <title>index</title>
+<script>
 
+</script>
 </head>
 <body>
 <div class="header-index">
@@ -35,11 +37,21 @@
     <c:if test="${not empty files}">
         <c:forEach var="list" items="${files}">
             <div class="grid-img">
-                <div class="img-detail"><img src ="getImg.do?imgPath=${list.imgPath}" onclick="file_download('${list.fileNewName}')"/></div>
+                <div class="img-detail"><img src ="getImg.do?imgPath=${list.imgPath}"
+                                                onclick="magnify(event,'${list.fileNewName}')"
+                                             /></div>
+
+
 <%--                <a href="getImg.do?imgPath=${list.imgPath}" download="${list.fileNewName}"><img src ="getImg.do?imgPath=${list.imgPath}" /></a>--%>
             </div>
         </c:forEach>
     </c:if>
+</div>
+
+<div id="modal" class="modal-overlay">
+    <img  id="content">
+    <div class="download-button">DOWNLOAD</div>
+    <div class="close-area">X</div>
 </div>
 
 </body>
