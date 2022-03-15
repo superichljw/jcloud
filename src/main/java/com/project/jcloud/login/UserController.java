@@ -5,6 +5,7 @@ import com.project.jcloud.file.fileDto;
 import com.project.jcloud.file.fileService;
 import com.project.jcloud.util.AES256;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.manager.util.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +51,11 @@ private String algo;
         HttpSession session = request.getSession();
         ModelAndView mv = new ModelAndView();
 
+        if(session.getAttribute("user")==null){
+            mv.setViewName("redirect:/");
+            return mv;
+        }
+
         int cnt = Integer.parseInt(session.getAttribute("uploadFileCnt").toString());
         String user = session.getAttribute("user").toString();
 
@@ -68,7 +76,7 @@ private String algo;
     }
 
     @RequestMapping(value="login.do" , method = RequestMethod.POST)
-    public ModelAndView loginCheck(@ModelAttribute userDto vo, HttpServletRequest request) throws Exception {
+    public ModelAndView loginCheck(@ModelAttribute userDto vo, HttpServletRequest request, HttpServletResponse response) throws Exception {
         /*암호화 적용 패스워드*/
         AES256 aes = new AES256();
         String pw = aes.encrypt(algo,key,iv,vo.getUserPw());
@@ -90,9 +98,21 @@ private String algo;
 
             mv.setViewName("redirect:index.do");
         }else{
-            mv.setViewName("redirect:index.do");
-            mv.addObject("msg","failure");
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.write("<script type='text/javascript'>alert('조회된 정보가 없습니다.'); self.close();</script>");
+            out.flush();
+
+            mv.setViewName("redirect:/");
         }
+        return mv;
+    }
+    @RequestMapping(value = "logout.do" , method = RequestMethod.POST)
+    public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        HttpSession session = request.getSession();
+        session.invalidate();
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("redirect:/");
         return mv;
     }
 }
