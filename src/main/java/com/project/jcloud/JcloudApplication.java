@@ -15,9 +15,9 @@ public class JcloudApplication {
         SpringApplication.run(JcloudApplication.class, args);
     }
 
-//    @Bean
-//    public HttpSessionListener httpSessionListener(){
-//        return new SessionListener();
-//    }
+    @Bean
+    public HttpSessionListener httpSessionListener(){
+        return new SessionListener();
+    }
 
 }
