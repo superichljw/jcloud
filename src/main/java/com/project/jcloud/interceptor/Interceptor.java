@@ -11,23 +11,23 @@ public class Interceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        boolean result = false;
-        String root = request.getContextPath();
-        String user = (String)request.getSession().getAttribute("user");
-
-        if(user == null){
-            PrintWriter printwriter = response.getWriter();
-            printwriter.print("<script>alert('시간만료! 로그인을 다시 해주십시오');</script>");
-            printwriter.flush();
-            printwriter.close();
-            response.sendRedirect(root + "/");
-            result = false;
-        }else{
-            result = true;
-        }
-        return result;
-//        System.out.println("어드민 컨트롤러 요청 입니다.!!");
-//        return super.preHandle(request,response,handler);
+//        boolean result = false;
+//        String root = request.getContextPath();
+//        String user = (String)request.getSession().getAttribute("user");
+//
+//        if(user == null){
+//            PrintWriter printwriter = response.getWriter();
+//            printwriter.print("<script>alert('시간만료! 로그인을 다시 해주십시오');</script>");
+//            printwriter.flush();
+//            printwriter.close();
+//            response.sendRedirect(root + "/");
+//            result = false;
+//        }else{
+//            result = true;
+//        }
+//        return result;
+        System.out.println("어드민 컨트롤러 요청 입니다.!!");
+        return super.preHandle(request,response,handler);
 
     }
 
@@ -37,13 +37,13 @@ public class Interceptor extends HandlerInterceptorAdapter {
         String root = request.getContextPath();
         String user = (String)request.getSession().getAttribute("user");
 
-        if(user == null){
-            PrintWriter printwriter = response.getWriter();
-            printwriter.print("<script>alert('시간만료! 로그인을 다시 해주십시오');</script>");
-            printwriter.flush();
-            printwriter.close();
-            response.sendRedirect(root + "/");
-        }
+//        if(user == null){
+        PrintWriter printwriter = response.getWriter();
+        printwriter.print("<script>alert('시간만료! 로그인을 다시 해주십시오');</script>");
+        printwriter.flush();
+        printwriter.close();
+//            response.sendRedirect(root + "/");
+//        }
         System.out.println("어드민 컨트롤러 응답 입니다.!!");
         System.out.println("root :: " + root);
         System.out.println("user :: " + user);
