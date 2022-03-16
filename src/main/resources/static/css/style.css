@@ -9,10 +9,16 @@
     grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
     grid-row-gap: 30px;
 }
-.grid-img img{
+.grid-img{
     display: block;
     height: 330px;
     width: 330px;
+}
+.grid-img img{
+    max-width: 330px;
+    max-height: 330px;
+    width: 100%;
+    height: auto;
 }
 .header-index{
     width: 60%;
@@ -115,9 +121,9 @@
 }
 #modal #content{
     display: none;
-    margin: 5% auto;
-    width: 80%;
-    height: 80%;
+    margin: 20px auto;
+    width: auto;
+    height: 100%;
 }
 #modal .download-button{
     left: 0;

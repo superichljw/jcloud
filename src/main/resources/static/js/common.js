@@ -40,6 +40,8 @@ function magnify(event,filename){
         image.src = event.target.src;
         modal.style.display = 'block';
         image.style.display = 'block';
+
+        modal.style.position='fixed';
         down_btn(event.target.src,filename);
         close_btn();
     })

@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <script src="<%=request.getContextPath()%>/js/common.js"></script>
+<%--    <script src="/resources/js/common.js"></script>--%>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
     <title>main</title>
     <script></script>
