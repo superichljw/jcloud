@@ -38,10 +38,10 @@ public class Interceptor extends HandlerInterceptorAdapter {
         String user = (String)request.getSession().getAttribute("user");
 
 //        if(user == null){
-        PrintWriter printwriter = response.getWriter();
-        printwriter.print("<script>alert('시간만료! 로그인을 다시 해주십시오');</script>");
-        printwriter.flush();
-        printwriter.close();
+//        PrintWriter printwriter = response.getWriter();
+//        printwriter.print("<script>alert('시간만료! 로그인을 다시 해주십시오');</script>");
+//        printwriter.flush();
+//        printwriter.close();
 //            response.sendRedirect(root + "/");
 //        }
         System.out.println("어드민 컨트롤러 응답 입니다.!!");
